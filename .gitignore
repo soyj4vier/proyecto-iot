@@ -1,0 +1,125 @@
+#############################################
+# ANDROID / ANDROID STUDIO
+#############################################
+
+# Build output
+/build/
+*/build/
+**/build/
+
+# Generated files
+bin/
+gen/
+out/
+captures/
+.navigation/
+
+# Local properties (SDK paths, machine specific)
+local.properties
+**/local.properties
+
+# Signing keys
+*.jks
+*.keystore
+*.pem
+
+# Google Services (para seguridad)
+google-services.json
+GoogleService-Info.plist
+
+# NDK / Native builds
+obj/
+.externalNativeBuild/
+
+# APK/AAB
+*.apk
+*.ap_
+*.aab
+
+# Dex / Class / Java builds
+*.dex
+*.class
+
+# Logs
+*.log
+
+#############################################
+# GRADLE
+#############################################
+
+# Gradle cache + build state
+.gradle/
+/.gradle/**
+**/.gradle/
+
+# Gradle build directories
+.gradle/
+build/
+
+# Gradle locks y archivos temporales
+*.lock
+gradle-app.setting
+
+# Wrapper
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+#############################################
+# ANDROID STUDIO / INTELLIJ IDEA
+#############################################
+
+# Carpetas de configuración generadas por IDE
+.idea/
+*.iml
+*.iws
+
+# Permitir solo lo necesario de .idea
+!.idea/codeStyles/
+!.idea/runConfigurations/
+!.idea/vcs.xml
+
+# Archivos de configuración que NO deben subirse
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries/
+.idea/httpRequests/
+.idea/shelf/
+.idea/kotlinc.xml
+.idea/navEditor.xml
+.idea/gradle.xml
+.idea/libraries/
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/compiler.xml
+.idea/misc.xml
+.idea/encodings.xml
+.idea/scopes/
+
+#############################################
+# ECLIPSE (por compatibilidad)
+#############################################
+
+.classpath
+.project
+.cproject
+.settings/
+
+#############################################
+# OTROS ARCHIVOS TEMPORALES
+#############################################
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp, swap, backup
+*~
+*.swp
+*.tmp
+*.temp
+
+# Java crash logs
+hs_err_pid*
+replay_pid*
