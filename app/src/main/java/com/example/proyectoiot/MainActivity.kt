@@ -50,7 +50,8 @@ class MainActivity : AppCompatActivity() {
 
                     if (loginResponse.status == "success") {
                         Toast.makeText(this@MainActivity, "Bienvenido ${loginResponse.nombre}", Toast.LENGTH_SHORT).show()
-                        navigateBasedOnRole(loginResponse.rol)
+                        // Pasamos todo el objeto de respuesta o solo el ID
+                        navigateBasedOnRole(loginResponse)
                     } else {
                         Toast.makeText(this@MainActivity, loginResponse.mensaje ?: "Error de credenciales", Toast.LENGTH_LONG).show()
                     }
@@ -67,7 +68,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun navigateBasedOnRole(rol: String?) {
+    private fun navigateBasedOnRole(userData: LoginResponse) {
+        val rol = userData.rol
         val intent = when (rol) {
             "ADMINISTRADOR" -> Intent(this, AdminActivity::class.java)
             "OPERADOR" -> Intent(this, OperadorActivity::class.java)
@@ -76,6 +78,11 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
+        
+        // PASAR DATOS IMPORTANTES A LA SIGUIENTE ACTIVIDAD
+        intent.putExtra("USER_ID", userData.idUsuario)
+        intent.putExtra("USER_NAME", userData.nombre)
+        
         // Evitar que el usuario vuelva al login con el botón 'Atrás'
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
