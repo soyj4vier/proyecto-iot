@@ -63,21 +63,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Gestión de Sensores"
+        android:text="Gestión de Recursos"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/purple_700"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrierControlLayout" />
 
-    <Button
-        android:id="@+id/btnManageSensors"
+    <LinearLayout
+        android:id="@+id/resourceControlLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="8dp"
-        android:text="Registrar / Bloquear Sensores"
-        android:drawableLeft="@android:drawable/ic_menu_my_calendar"
-        app:layout_constraintTop_toBottomOf="@+id/sensorsLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/sensorsLabel">
+
+        <Button
+            android:id="@+id/btnManageSensors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:text="Sensores"
+            android:drawableTop="@android:drawable/ic_menu_my_calendar"
+            android:textSize="12sp"/>
+
+        <Button
+            android:id="@+id/btnManageUsers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:text="Usuarios"
+            android:drawableTop="@android:drawable/ic_menu_add"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
 
     <!-- SECCIÓN ÚLTIMOS EVENTOS -->
     <TextView
@@ -90,7 +111,7 @@
         android:textStyle="bold"
         android:textColor="@color/purple_700"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnManageSensors" />
+        app:layout_constraintTop_toBottomOf="@+id/resourceControlLayout" />
 
     <!-- Aquí usaremos un ScrollView simple por ahora para los logs, 
          más adelante podemos usar un RecyclerView -->

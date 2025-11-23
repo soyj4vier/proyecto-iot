@@ -28,6 +28,8 @@
         <activity android:name=".AdminActivity" />
         <activity android:name=".OperadorActivity" />
         <activity android:name=".GestionSensoresActivity" />
+        <activity android:name=".GestionUsuariosActivity" />
+        <activity android:name=".RegistroActivity" />
 
     </application>
 

@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectoiot.databinding.ItemSensorBinding
 import com.example.proyectoiot.network.Sensor
 
-class SensorAdapter(private var lista: List<Sensor>) : RecyclerView.Adapter<SensorAdapter.ViewHolder>() {
+class SensorAdapter(
+    private var lista: List<Sensor>,
+    private val onEditClick: (Sensor) -> Unit,
+    private val onDeleteClick: (Sensor) -> Unit
+) : RecyclerView.Adapter<SensorAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemSensorBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -36,6 +40,10 @@ class SensorAdapter(private var lista: List<Sensor>) : RecyclerView.Adapter<Sens
         } else {
             holder.binding.ivIcon.setImageResource(android.R.drawable.ic_menu_compass) // Icono temporal para tarjeta
         }
+
+        // Click Listeners para Editar y Eliminar
+        holder.binding.btnEditSensor.setOnClickListener { onEditClick(sensor) }
+        holder.binding.btnDeleteSensor.setOnClickListener { onDeleteClick(sensor) }
     }
 
     override fun getItemCount(): Int = lista.size

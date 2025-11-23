@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectoiot.databinding.ActivityAdminBinding
 import com.example.proyectoiot.network.ApiClient
 import com.example.proyectoiot.network.ControlResponse
+import com.example.proyectoiot.network.HistorialResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,13 +42,51 @@ class AdminActivity : AppCompatActivity() {
         }
 
         binding.btnManageSensors.setOnClickListener {
-            // Ir a la pantalla de gestión de sensores
             val intent = Intent(this, GestionSensoresActivity::class.java)
             intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
-        agregarLog("Sesión iniciada.")
+        binding.btnManageUsers.setOnClickListener {
+            val intent = Intent(this, GestionUsuariosActivity::class.java)
+            intent.putExtra("USER_ID", userId)
+            startActivity(intent)
+        }
+
+        // Cargar el historial real desde el servidor
+        cargarHistorial()
+    }
+
+    private fun cargarHistorial() {
+        binding.tvLogs.text = "Cargando historial del servidor..."
+
+        ApiClient.instance.obtenerHistorial(userId).enqueue(object : Callback<HistorialResponse> {
+            override fun onResponse(call: Call<HistorialResponse>, response: Response<HistorialResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val res = response.body()!!
+                    if (res.status == "success" && res.eventos != null) {
+                        val sb = StringBuilder()
+                        // Agregamos una marca de tiempo actual
+                        val fechaActual = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+                        sb.append("[$fechaActual] Sesión iniciada y datos actualizados.\n\n")
+
+                        for (evento in res.eventos) {
+                            // Formato simple: [Fecha] Evento - Resultado
+                            sb.append("[${evento.fechaHora}]\n${evento.tipoEvento} - ${evento.resultado}\n(Origen: ${evento.origen})\n\n")
+                        }
+                        binding.tvLogs.text = sb.toString()
+                    } else {
+                        binding.tvLogs.text = "Sesión iniciada.\nNo hay eventos históricos recientes."
+                    }
+                } else {
+                    binding.tvLogs.text = "Error al cargar historial: ${response.code()}"
+                }
+            }
+
+            override fun onFailure(call: Call<HistorialResponse>, t: Throwable) {
+                binding.tvLogs.text = "Error de conexión. No se pudo cargar el historial antiguo."
+            }
+        })
     }
 
     private fun enviarComando(accion: String) {
@@ -58,6 +97,8 @@ class AdminActivity : AppCompatActivity() {
 
         binding.btnOpenBarrier.isEnabled = false
         binding.btnCloseBarrier.isEnabled = false
+        
+        // Agregamos el log localmente mientras esperamos respuesta
         agregarLog("Enviando comando: $accion...")
 
         ApiClient.instance.controlarBarrera(accion, userId).enqueue(object : Callback<ControlResponse> {
@@ -89,6 +130,7 @@ class AdminActivity : AppCompatActivity() {
     private fun agregarLog(mensaje: String) {
         val fecha = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
         val logActual = binding.tvLogs.text.toString()
+        // Insertamos el nuevo mensaje AL PRINCIPIO
         val nuevoLog = "[$fecha] $mensaje\n$logActual"
         binding.tvLogs.text = nuevoLog
     }

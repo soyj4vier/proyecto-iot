@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             performLogin()
         }
+
+        binding.tvRegister.setOnClickListener {
+            startActivity(Intent(this, RegistroActivity::class.java))
+        }
     }
 
     private fun performLogin() {
